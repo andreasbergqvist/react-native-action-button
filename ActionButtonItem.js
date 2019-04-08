@@ -1,14 +1,16 @@
-import React, { Component } from "react";
+import React, {
+  Component
+} from "react";
 import PropTypes from "prop-types";
 import {
   StyleSheet,
   Text,
   View,
-  Animated,
   TouchableNativeFeedback,
   TouchableWithoutFeedback,
   Dimensions,
 } from "react-native";
+import Animated from 'react-native-reanimated';
 import {
   shadowStyle,
   alignItemsMap,
@@ -18,13 +20,15 @@ import {
   DEFAULT_ACTIVE_OPACITY
 } from "./shared";
 
-const { width: WIDTH } = Dimensions.get("window");
+const {
+  width: WIDTH
+} = Dimensions.get("window");
 const SHADOW_SPACE = 10;
 const TEXT_HEIGHT = 22;
 
-const TextTouchable = isAndroid
-  ? TouchableNativeFeedback
-  : TouchableWithoutFeedback;
+const TextTouchable = isAndroid ?
+  TouchableNativeFeedback :
+  TouchableWithoutFeedback;
 
 export default class ActionButtonItem extends Component {
   static get defaultProps() {
@@ -65,14 +69,12 @@ export default class ActionButtonItem extends Component {
 
       // backgroundColor: this.props.buttonColor,
       opacity: this.props.anim,
-      transform: [
-        {
-          translateY: this.props.anim.interpolate({
-            inputRange: [0, 1],
-            outputRange: [verticalOrientation === "down" ? -40 : 40, 0]
-          })
-        }
-      ]
+      transform: [{
+        translateY: this.props.anim.interpolate({
+          inputRange: [0, 1],
+          outputRange: [verticalOrientation === "down" ? -40 : 40, 0]
+        })
+      }]
     };
 
     const buttonStyle = {
@@ -90,43 +92,61 @@ export default class ActionButtonItem extends Component {
     const Touchable = getTouchableComponent(this.props.useNativeFeedback);
 
     const parentStyle = isAndroid &&
-      this.props.fixNativeFeedbackRadius
-      ? {
-          height: size,
-          marginBottom: spacing,
-          right: this.props.offsetX,
-          borderRadius: this.props.size / 2
-        }
-      : {
-          paddingHorizontal: this.props.offsetX,
-          height: size + SHADOW_SPACE + spacing
-        };
-    return (
-      <Animated.View
-        pointerEvents="box-none"
-        style={[animatedViewStyle, parentStyle]}
-      >
-        <View>
-          <Touchable
-            testID={this.props.testID}
-            accessibilityLabel={this.props.accessibilityLabel}
-            background={touchableBackground(
-              this.props.nativeFeedbackRippleColor,
-              this.props.fixNativeFeedbackRadius
-            )}
-            activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
-            onPress={this.props.onPress}
-          >
-            <View style={[
-              buttonStyle,
-              !hideShadow ? {...shadowStyle, ...this.props.shadowStyle} : null
-            ]}>
-              {this.props.children}
-            </View>
-          </Touchable>
-        </View>
-        {this._renderTitle()}
-      </Animated.View>
+      this.props.fixNativeFeedbackRadius ?
+      {
+        height: size,
+        marginBottom: spacing,
+        right: this.props.offsetX,
+        borderRadius: this.props.size / 2
+      } :
+      {
+        paddingHorizontal: this.props.offsetX,
+        height: size + SHADOW_SPACE + spacing
+      };
+    return ( <
+      Animated.View pointerEvents = "box-none"
+      style = {
+        [animatedViewStyle, parentStyle]
+      } >
+      <
+      View >
+      <
+      Touchable testID = {
+        this.props.testID
+      }
+      accessibilityLabel = {
+        this.props.accessibilityLabel
+      }
+      background = {
+        touchableBackground(
+          this.props.nativeFeedbackRippleColor,
+          this.props.fixNativeFeedbackRadius
+        )
+      }
+      activeOpacity = {
+        this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY
+      }
+      onPress = {
+        this.props.onPress
+      } >
+      <
+      View style = {
+        [
+          buttonStyle,
+          !hideShadow ? {
+            ...shadowStyle,
+            ...this.props.shadowStyle
+          } : null
+        ]
+      } > {
+        this.props.children
+      } <
+      /View> <
+      /Touchable> <
+      /View> {
+        this._renderTitle()
+      } <
+      /Animated.View>
     );
   }
 
@@ -143,10 +163,12 @@ export default class ActionButtonItem extends Component {
       spaceBetween
     } = this.props;
     const offsetTop = Math.max(size / 2 - TEXT_HEIGHT / 2, 0);
-    const positionStyles = { top: offsetTop };
-    const hideShadow = hideLabelShadow === undefined
-      ? this.props.hideShadow
-      : hideLabelShadow;
+    const positionStyles = {
+      top: offsetTop
+    };
+    const hideShadow = hideLabelShadow === undefined ?
+      this.props.hideShadow :
+      hideLabelShadow;
 
     if (position !== "center") {
       positionStyles[position] =
@@ -164,30 +186,42 @@ export default class ActionButtonItem extends Component {
 
     const title = (
       React.isValidElement(this.props.title) ?
-        this.props.title
-      : (
-        <Text
-          allowFontScaling={false}
-          style={[styles.text, this.props.textStyle]}
-        >
-          {this.props.title}
-        </Text>
+      this.props.title :
+      ( <
+        Text allowFontScaling = {
+          false
+        }
+        style = {
+          [styles.text, this.props.textStyle]
+        } >
+        {
+          this.props.title
+        } <
+        /Text>
       )
     )
 
-    return (
-      <TextTouchable
-        background={touchableBackground(
+    return ( <
+      TextTouchable background = {
+        touchableBackground(
           this.props.nativeFeedbackRippleColor,
           this.props.fixNativeFeedbackRadius
-        )}
-        activeOpacity={this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY}
-        onPress={this.props.onPress}
-      >
-        <View style={textStyles}>
-          {title}
-        </View>
-      </TextTouchable>
+        )
+      }
+      activeOpacity = {
+        this.props.activeOpacity || DEFAULT_ACTIVE_OPACITY
+      }
+      onPress = {
+        this.props.onPress
+      } >
+      <
+      View style = {
+        textStyles
+      } > {
+        title
+      } <
+      /View> <
+      /TextTouchable>
     );
   }
 }
